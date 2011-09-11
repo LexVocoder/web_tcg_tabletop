@@ -11,7 +11,7 @@ USE magic_tabletop;
 
 CREATE TABLE games (
 id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-phase ENUM('untap','upkeep','draw','first main','begin combat','declare attackers','post-attack','declare blockers','post-block','combat damage','end combat','second main','end of turn') NOT NULL
+phase_name VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE logs (
@@ -31,7 +31,7 @@ password VARCHAR(32) NOT NULL
 CREATE TABLE zones (
 id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 player_id INT NOT NULL,
-type ENUM('hand','library','graveyard','exile','command','sideboard') NOT NULL
+type_name VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE cards (
@@ -40,6 +40,7 @@ zone_id INT NOT NULL,
 name VARCHAR(96) NOT NULL
 );
 
+/* A Note is a tag with a name but no value. */
 CREATE TABLE tags_and_notes (
 id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 attachment_type ENUM('player','zone','card') NOT NULL,

@@ -1,0 +1,82 @@
+/*
+Copyright (C) 2011 Alex Hankins.
+Licensed under the Open Software License version 3.0
+*/
+
+DROP DATABASE IF EXISTS magic_tabletop;
+CREATE DATABASE magic_tabletop;
+
+USE magic_tabletop;
+
+
+CREATE TABLE games (
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+phase ENUM('untap','upkeep','draw','first main','begin combat','declare attackers','post-attack','declare blockers','post-block','combat damage','end combat','second main','end of turn') NOT NULL
+);
+
+CREATE TABLE logs (
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+game_id INT NOT NULL,
+timestamp_utc DATETIME NOT NULL,
+message VARCHAR(80) NOT NULL
+);
+
+CREATE TABLE players (
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+game_id INT,
+name VARCHAR(32) NOT NULL,
+password VARCHAR(32) NOT NULL
+);
+
+CREATE TABLE zones (
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+player_id INT NOT NULL,
+type ENUM('hand','library','graveyard','exile','command','sideboard') NOT NULL
+);
+
+CREATE TABLE cards (
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+zone_id INT NOT NULL,
+name VARCHAR(96) NOT NULL
+);
+
+CREATE TABLE tags_and_notes (
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+attachment_type ENUM('player','zone','card') NOT NULL,
+attachment_id INT NOT NULL,
+tag_name VARCHAR(80) NOT NULL,
+tag_value VARCHAR(80)
+);
+
+CREATE TABLE links (
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+source_card_id INT NOT NULL,
+destination_type ENUM('player','zone','card') NOT NULL,
+destination_id INT NOT NULL
+);
+
+CREATE TABLE aliases_to_canonical_ascii (
+alias VARCHAR(96) NOT NULL PRIMARY KEY,
+canonical_ascii_name VARCHAR(96) NOT NULL
+);
+
+CREATE TABLE token_text (
+card_id INT NOT NULL PRIMARY KEY,
+text VARCHAR(1024)
+);
+
+CREATE TABLE official_card_text (
+canonical_ascii_name VARCHAR(96) NOT NULL PRIMARY KEY,
+text VARCHAR(1024)
+);
+
+CREATE TABLE available_players (
+player_id INT PRIMARY KEY NOT NULL
+);
+
+CREATE TABLE pairings (
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+initiator_id INT NOT NULL,
+requested_id INT NOT NULL
+);
+

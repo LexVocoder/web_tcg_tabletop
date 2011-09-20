@@ -5,3 +5,28 @@ Licensed under the Open Software License version 3.0
 
 @CHARSET "ISO-8859-1";
 
+.challenger {
+	background-color: rgb(100%, 40%, 40%);
+}
+
+.footer {
+	font-size: 8pt;
+	text-align: right;
+}
+
+.non_challenger {
+	background-color: rgb(100%,80%,60%);
+}
+
+.not_displayed {
+	display: none;
+}
+
+.opponents_list {
+	background-color: rgb(100%,80%,60%);
+}
+
+.opponents_table {
+	border: 0px;
+}
+
